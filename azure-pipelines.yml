@@ -7,30 +7,21 @@ trigger:
 pool:
   vmImage: 'LinuxAgents'
 
-stages:
-- stage: terraform
-  displayName: 'Check Terraform Providor'
-  jobs:
-  - job: TerraformPlan
-    displayName: 'Terraform Plan'
-    steps:
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'terraform init -upgrade'
-    jobs:
-  - job: TerraformPlan
-    displayName: 'Terraform Plan'
-    steps:
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'terraform plan -out main.tfplan'
-    jobs:
-  - job: TerraformPlan
-    displayName: 'Terraform Plan'
-    steps:
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'terraform apply main.tfplan'
+step:
+- task: Bash@3
+  displayName: 'Check Terraform Provider'
+  inputs:
+    targetType: 'inline'
+    script: 'terraform init -upgrade'
+
+- task: Bash@3
+  displayName: 'Make Terraform Plan'
+  inputs:
+    targetType: 'inline'
+    script: 'terraform plan -out main.tfplan'
+
+- task: Bash@3
+  displayName: 'Deploy from Terraform Plan'
+  inputs:
+    targetType: 'inline'
+    script: 'terraform apply main.tfplan'

@@ -8,7 +8,7 @@ pool:
   vmImage: 'LinuxAgents'
 
 stages:
-- stage: Check
+- stage: terraform
   displayName: 'Check Terraform Providor'
   jobs:
   - job: TerraformPlan
@@ -18,10 +18,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'terraform init -upgrade'
-
-- stage: Plan
-  displayName: 'Make Terraform Plan'
-  jobs:
+    jobs:
   - job: TerraformPlan
     displayName: 'Terraform Plan'
     steps:
@@ -29,10 +26,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'terraform plan -out main.tfplan'
-
-- stage: Deploy
-  displayName: 'Deploy from Terraform Plan'
-  jobs:
+    jobs:
   - job: TerraformPlan
     displayName: 'Terraform Plan'
     steps:

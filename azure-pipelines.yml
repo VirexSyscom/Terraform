@@ -7,7 +7,7 @@ trigger:
 pool:
   vmImage: 'LinuxAgents'
 
-step:
+steps:
 - task: Bash@3
   displayName: 'Check Terraform Provider'
   inputs:

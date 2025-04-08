@@ -1,8 +1,6 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Azure Pipeline that run basic continuous integration on a Terraform project
 
+# This makes sure the pipeline is triggered every time code is pushed in the validation-testing example source, on all branches.
 trigger:
 - main
 

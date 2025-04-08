@@ -9,6 +9,12 @@ pool:
 
 steps:
 - task: Bash@3
+  displayName: 'Go To 2VM'
+  inputs:
+    targetType: 'inline'
+    script: 'cd /home/virex/2VM'
+
+- task: Bash@3
   displayName: 'Check Terraform Provider'
   inputs:
     targetType: 'inline'

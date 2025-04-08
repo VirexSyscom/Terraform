@@ -8,34 +8,35 @@ pool:
   vmImage: 'LinuxAgents'
 
 stages:
-- stage: Plan
-  displayName: 'Terraform Plan'
+- stage: Check
+  displayName: 'Check Terraform Providor'
   jobs:
   - job: TerraformPlan
     displayName: 'Terraform Plan'
     steps:
-    - task: TerraformInstaller@0
+    - task: Bash@3
       inputs:
-        terraformVersion: 'latest'
+        targetType: 'inline'
+        script: 'terraform init -upgrade'
 
-    - script: |
-        terraform --version
-        terraform init -backend-config="storage_account_name=$(storageAccountName)" -backend-config="container_name=$(containerName)" -backend-config="key=$(key)" -backend-config="access_key=$(accessKey)"
-        terraform plan -out=tfplan
-      displayName: 'Terraform Init and Plan'
+- stage: Plan
+  displayName: 'Make Terraform Plan'
+  jobs:
+  - job: TerraformPlan
+    displayName: 'Terraform Plan'
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'terraform plan -out main.tfplan'
 
 - stage: Deploy
-  displayName: 'Terraform Apply'
+  displayName: 'Deploy from Terraform Plan'
   jobs:
-  - job: TerraformApply
-    displayName: 'Terraform Apply'
+  - job: TerraformPlan
+    displayName: 'Terraform Plan'
     steps:
-    - task: TerraformInstaller@0
+    - task: Bash@3
       inputs:
-        terraformVersion: 'latest'
-
-    - script: |
-        terraform --version
-        terraform init -backend-config="storage_account_name=$(storageAccountName)" -backend-config="container_name=$(containerName)" -backend-config="key=$(key)" -backend-config="access_key=$(accessKey)"
-        terraform apply -auto-approve tfplan
-      displayName: 'Terraform Init and Apply'
+        targetType: 'inline'
+        script: 'terraform apply main.tfplan'

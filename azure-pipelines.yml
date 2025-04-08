@@ -12,19 +12,18 @@ steps:
   displayName: 'Check Terraform Provider'
   inputs:
     targetType: 'inline'
-    script: 'echo Hello'
-#    script: 'terraform init -upgrade'
+    script: 'terraform init -upgrade'
 
-- task: Bash@3
-  displayName: 'Make Terraform Plan'
-  inputs:
-    targetType: 'inline'
-    script: 'echo Hello2'
+#- task: Bash@3
+#  displayName: 'Make Terraform Plan'
+#  inputs:
+#    targetType: 'inline'
+#    script: 'echo Hello2'
 #    script: 'terraform plan -out main.tfplan'
 
-- task: Bash@3
-  displayName: 'Deploy from Terraform Plan'
-  inputs:
-    targetType: 'inline'
-    script: 'echo Hello3'
+#- task: Bash@3
+#  displayName: 'Deploy from Terraform Plan'
+#  inputs:
+#    targetType: 'inline'
+#    script: 'echo Hello3'
 #    script: 'terraform apply main.tfplan'

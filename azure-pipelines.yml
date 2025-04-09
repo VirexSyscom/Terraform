@@ -4,6 +4,12 @@
 trigger:
 - main
 
+variables:
+  SUB_ID: $(SUB_ID)
+  ARM_TENANT_ID: $(TENANT_ID)
+  ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+  ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET_ID)
+
 pool:
   name: 'LinuxAgents'
 
@@ -12,7 +18,7 @@ steps:
   displayName: 'terraform'
   inputs:
     filePath: './test.sh'
-       
+
 #- task: Bash@3
 #  displayName: 'Set ENV #1'
 #  inputs:

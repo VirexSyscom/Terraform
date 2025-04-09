@@ -15,3 +15,23 @@ variable "username" {
   description = "The username for the local account that will be created on the new VM."
   default     = "virex"
 }
+
+variable "SUBS_ID" {
+  type        = string
+  default     = "$(SUB_ID)"
+}
+
+variable "AZURE_TENANT_ID" {
+  type        = string
+  default     = "$(TENANT_ID)"
+}
+
+variable "AZURE_CLIENT_ID" {
+  type        = string
+  default     = "$(ARM_CLIENT_ID)"
+}
+
+variable "AZURE_CLIENT_SECRET" {
+  type        = string
+  default     = "$(ARM_CLIENT_SECRET_ID)"
+}

@@ -33,5 +33,5 @@ variable "ARM_Client_ID" {
 
 variable "ARM_Client_Secret_ID" {
   type        = string
-  default     = ""$(ARMCSID)"
+  default     = "$(ARMCSID)"
 }

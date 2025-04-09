@@ -33,5 +33,5 @@ variable "AZURE_CLIENT_ID" {
 
 variable "AZURE_CLIENT_SECRET" {
   type        = string
-  default     = '$(ARMCSID)"
+  default     = "$(ARMCSID)"
 }

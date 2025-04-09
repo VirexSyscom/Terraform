@@ -4,6 +4,13 @@
 trigger:
 - main
 
+variables:
+  SID: '$(SUB_ID)'
+  ATID: '$(TENANT_ID)'
+  ARMCID: '(ARM_CLIENT_ID)'
+  ARMCSID: '$(ARM_CLIENT_SECRET_ID)'
+
+
 pool:
   name: 'LinuxAgents'
 
@@ -52,31 +59,52 @@ steps:
     script: 'terraform plan -out main.tfplan'
 
 - task: Bash@3
+  displayName: 'Set echo #1'
+  inputs:
+    targetType: 'inline'
+    script: 'echo "$(SID)"'
+
+- task: Bash@3
+  displayName: 'Set echo #2'
+  inputs:
+    targetType: 'inline'
+    script: 'echo "$(ATID)"'
+
+- task: Bash@3
+  displayName: 'Set echo #3'
+  inputs:
+    targetType: 'inline'
+    script: 'echo "$(ARMCID)"'
+
+- task: Bash@3
+  displayName: 'Set echo #4'
+  inputs:
+    targetType: 'inline'
+    script: 'echo "$(ARMCSID)"'
+
+
+- task: Bash@3
   displayName: 'Set ENV #1'
   inputs:
     targetType: 'inline'
-    overrideParameters: '-SID $(SUB_ID)'
     script: 'export ARM_SUBSCRIPTION_ID="$(SID)"'
 
 - task: Bash@3
   displayName: 'Set ENV #2'
   inputs:
     targetType: 'inline'
-    overrideParameters: 'ATID $(TENANT_ID)'
     script: 'export ARM_TENANT_ID="$(ATID)"'
 
 - task: Bash@3
   displayName: 'Set ENV #3'
   inputs:
     targetType: 'inline'
-    overrideParameters: '-ARMCID $(ARM_CLIENT_ID)'
     script: 'export ARM_CLIENT_ID="$(ARMCID)"'
 
 - task: Bash@3
   displayName: 'Set ENV #4'
   inputs:
     targetType: 'inline'
-    overrideParameters: '-ARMCSID $(ARM_CLIENT_SECRET_ID)'
     script: 'export ARM_CLIENT_SECRET="$(ARMCSID)"'
 
 

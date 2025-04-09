@@ -1,9 +1,9 @@
 terraform {
   backend "azurerm" {
-  tenant_id       = var.Tenant_ID
-  client_id       = var.ARM_Client_ID
-  client_secret   = var.ARM_Client_Secret_ID
-  subscription_id = var.Subscription_ID
+  tenant_id       = "$(ATID)"
+  client_id       = "$(ARMCID)"
+  client_secret   = "$(ARMCSID)"
+  subscription_id = "$(SID)"
   }
   required_providers {
     azapi = {

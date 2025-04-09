@@ -15,23 +15,3 @@ variable "username" {
   description = "The username for the local account that will be created on the new VM."
   default     = "virex"
 }
-
-variable "Subscription_ID" {
-  type        = string
-  default     = "$(SID)"
-}
-
-variable "Tenant_ID" {
-  type        = string
-  default     = "$(ATID)"
-}
-
-variable "ARM_Client_ID" {
-  type        = string
-  default     = "$(ARMCID)"
-}
-
-variable "ARM_Client_Secret_ID" {
-  type        = string
-  default     = "$(ARMCSID)"
-}

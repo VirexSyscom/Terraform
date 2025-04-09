@@ -1,4 +1,10 @@
 terraform {
+  backend "azurerm" {
+  tenant_id       = var.Tenant_ID
+  client_id       = var.ARM_Client_ID
+  client_secret   = var.ARM_Client_Secret_ID
+  subscription_id = var.Subscription_ID
+  }
   required_providers {
     azapi = {
       source  = "azure/azapi"
@@ -17,12 +23,4 @@ terraform {
 
 provider "azurerm"{
   features {}
-}
-
-
-backend "azurerm" {
-  tenant_id       = var.Tenant_ID
-  client_id       = var.ARM_Client_ID
-  client_secret   = var.ARM_Client_Secret_ID
-  subscription_id = var.Subscription_ID
 }

@@ -18,20 +18,20 @@ variable "username" {
 
 variable "SUBS_ID" {
   type        = string
-  default     = $(SUB_ID)
+  default     = "$(SUB_ID)"
 }
 
 variable "AZURE_TENANT_ID" {
   type        = string
-  default     = $(TENANT_ID)
+  default     = "$(TENANT_ID)"
 }
 
 variable "AZURE_CLIENT_ID" {
   type        = string
-  default     = $(ARM_CLIENT_ID)
+  default     = "$(ARM_CLIENT_ID)"
 }
 
 variable "AZURE_CLIENT_SECRET" {
   type        = string
-  default     = $(ARM_CLIENT_SECRET_ID)
+  default     = '$(ARM_CLIENT_SECRET_ID)"
 }

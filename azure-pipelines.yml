@@ -5,10 +5,10 @@ trigger:
 - main
 
 variables:
-  SUB_ID: $(SUB_ID)
-  ARM_TENANT_ID: $(TENANT_ID)
-  ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-  ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET_ID)
+  SUB_ID: '$(SUB_ID)'
+  ARM_TENANT_ID: '$(TENANT_ID)'
+  ARM_CLIENT_ID: '$(ARM_CLIENT_ID)'
+  ARM_CLIENT_SECRET: '$(ARM_CLIENT_SECRET_ID)'
 
 pool:
   name: 'LinuxAgents'

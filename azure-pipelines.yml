@@ -4,12 +4,6 @@
 trigger:
 - main
 
-variables:
--SID $(SUB_ID)
--ATID $(TENANT_ID)
--ARMCID $(ARM_CLIENT_ID)
--ARMCSID $(ARM_CLIENT_SECRET_ID)
-
 pool:
   name: 'LinuxAgents'
 
@@ -61,24 +55,28 @@ steps:
   displayName: 'Set ENV #1'
   inputs:
     targetType: 'inline'
+    overrideParameters: '-SID $(SUB_ID)
     script: 'export ARM_SUBSCRIPTION_ID="$(SID)"'
 
 - task: Bash@3
   displayName: 'Set ENV #2'
   inputs:
     targetType: 'inline'
+    overrideParameters: 'ATID $(TENANT_ID)'
     script: 'export ARM_TENANT_ID="$(ATID)"'
 
 - task: Bash@3
   displayName: 'Set ENV #3'
   inputs:
     targetType: 'inline'
+
     script: 'export ARM_CLIENT_ID="$(ARMCID)"'
 
 - task: Bash@3
   displayName: 'Set ENV #4'
   inputs:
     targetType: 'inline'
+    overrideParameters: '-ARMCSID $(ARM_CLIENT_SECRET_ID)'
     script: 'export ARM_CLIENT_SECRET="$(ARMCSID)"'
 
 

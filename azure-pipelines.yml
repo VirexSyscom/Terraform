@@ -55,7 +55,7 @@ steps:
   displayName: 'Set ENV #1'
   inputs:
     targetType: 'inline'
-    overrideParameters: '-SID $(SUB_ID)
+    overrideParameters: '-SID $(SUB_ID)'
     script: 'export ARM_SUBSCRIPTION_ID="$(SID)"'
 
 - task: Bash@3
@@ -69,7 +69,7 @@ steps:
   displayName: 'Set ENV #3'
   inputs:
     targetType: 'inline'
-
+    overrideParameters: '-ARMCID $(ARM_CLIENT_ID)'
     script: 'export ARM_CLIENT_ID="$(ARMCID)"'
 
 - task: Bash@3

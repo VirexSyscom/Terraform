@@ -7,7 +7,7 @@ trigger:
 variables:
   SID: '$(SUB_ID)'
   ATID: '$(TENANT_ID)'
-  ARMCID: '(ARM_CLIENT_ID)'
+  ARMCID: '$(ARM_CLIENT_ID)'
   ARMCSID: '$(ARM_CLIENT_SECRET_ID)'
 
 

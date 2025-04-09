@@ -9,45 +9,50 @@ pool:
 
 steps:
 - task: Bash@3
-  displayName: 'Set ENV #1'
+  displayName: 'terraform'
   inputs:
-    targetType: 'inline'
-    script: "export ARM_SUBSCRIPTION_ID='$(SUB_ID)'"
-
-- task: Bash@3
-  displayName: 'Set ENV #2'
-  inputs:
-    targetType: 'inline'
-    script: "export ARM_TENANT_ID='$(TENANT_ID)'"
-
-
-- task: Bash@3
-  displayName: 'Set ENV #3'
-  inputs:
-    targetType: 'inline'
-    script: "export ARM_CLIENT_ID='$(ARM_CLIENT_ID)'"
-
-- task: Bash@3
-  displayName: 'Set ENV #4'
-  inputs:
-    targetType: 'inline'
-    script: "export ARM_CLIENT_SECRET='$(ARM_CLIENT_SECRET_ID)'"
-
-
-- task: Bash@3
-  displayName: 'Check Terraform Provider'
-  inputs:
-    targetType: 'inline'
-    script: 'terraform init -upgrade'
-
-- task: Bash@3
-  displayName: 'Make Terraform Plan'
-  inputs:
-    targetType: 'inline'
-    script: 'terraform plan -out main.tfplan'
-
-- task: Bash@3
-  displayName: 'Deploy from Terraform Plan'
-  inputs:
-   targetType: 'inline'
-   script: 'terraform apply main.tfplan'
+    filePath: './test.sh'
+       
+#- task: Bash@3
+#  displayName: 'Set ENV #1'
+#  inputs:
+#    targetType: 'inline'
+#    script: "export ARM_SUBSCRIPTION_ID='$(SUB_ID)'"
+#
+#- task: Bash@3
+#  displayName: 'Set ENV #2'
+#  inputs:
+#    targetType: 'inline'
+#    script: "export ARM_TENANT_ID='$(TENANT_ID)'"
+#
+#
+#- task: Bash@3
+#  displayName: 'Set ENV #3'
+#  inputs:
+#    targetType: 'inline'
+#    script: "export ARM_CLIENT_ID='$(ARM_CLIENT_ID)'"
+#
+#- task: Bash@3
+#  displayName: 'Set ENV #4'
+#  inputs:
+#    targetType: 'inline'
+#    script: "export ARM_CLIENT_SECRET='$(ARM_CLIENT_SECRET_ID)'"
+#
+#
+#- task: Bash@3
+#  displayName: 'Check Terraform Provider'
+#  inputs:
+#    targetType: 'inline'
+#    script: 'terraform init -upgrade'
+#
+#- task: Bash@3
+#  displayName: 'Make Terraform Plan'
+#  inputs:
+#    targetType: 'inline'
+#    script: 'terraform plan -out main.tfplan'
+#
+#- task: Bash@3
+#  displayName: 'Deploy from Terraform Plan'
+#  inputs:
+#    targetType: 'inline'
+#    script: 'terraform apply main.tfplan'

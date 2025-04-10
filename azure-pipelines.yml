@@ -1,115 +1,54 @@
-# Azure Pipeline that run basic continuous integration on a Terraform project
-
 # This makes sure the pipeline is triggered every time code is pushed in the validation-testing example source, on all branches.
 trigger:
-- main
+  branches:
+    include:
+    - '*'
+  paths:
+    include:
+    - 'samples/integration-testing/src/*'
 
 variables:
-  SID: '$(SUB_ID)'
-  ATID: '$(TENANT_ID)'
-  ARMCID: '$(ARM_CLIENT_ID)'
-  ARMCSID: '$(ARM_CLIENT_SECRET_ID)'
+  # There must be an Azure Service Connection with that name defined in your Azure DevOps settings. See https://docs.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops
+  serviceConnection: 'azurecreate'
+  azureLocation: 'japaneast'
+  # Terraform settings
+  terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)/samples/integration-testing/src'
+  terraformVersion: 'lastest'
 
-
-pool:
-  name: 'LinuxAgents'
-
-steps:
-#- task: Bash@3
-#  displayName: 'terraform'
-#  inputs:
-#    filePath: './test.sh'
-#
-#- task: Bash@3
-#  displayName: 'Set ENV #1'
-#  inputs:
-#    targetType: 'inline'
-#    script: "export ARM_SUBSCRIPTION_ID='$(SUB_ID)'"
-#
-#- task: Bash@3
-#  displayName: 'Set ENV #2'
-#  inputs:
-#    targetType: 'inline'
-#    script: "export ARM_TENANT_ID='$(TENANT_ID)'"
-#
-#
-#- task: Bash@3
-#  displayName: 'Set ENV #3'
-#  inputs:
-#    targetType: 'inline'
-#    script: "export ARM_CLIENT_ID='$(ARM_CLIENT_ID)'"
-#
-#- task: Bash@3
-#  displayName: 'Set ENV #4'
-#  inputs:
-#    targetType: 'inline'
-#    script: "export ARM_CLIENT_SECRET='$(ARM_CLIENT_SECRET_ID)'"
-#
-#
-- task: Bash@3
-  displayName: 'Check Terraform Provider'
-  inputs:
-    targetType: 'inline'
-    script: 'terraform init -upgrade'
-
-- task: Bash@3
-  displayName: 'Make Terraform Plan'
-  inputs:
-    targetType: 'inline'
-    script: 'terraform plan -out main.tfplan'
-
-- task: Bash@3
-  displayName: 'Set echo #1'
-  inputs:
-    targetType: 'inline'
-    script: 'echo "$(SID)"'
-
-- task: Bash@3
-  displayName: 'Set echo #2'
-  inputs:
-    targetType: 'inline'
-    script: 'echo "$(ATID)"'
-
-- task: Bash@3
-  displayName: 'Set echo #3'
-  inputs:
-    targetType: 'inline'
-    script: 'echo "$(ARMCID)"'
-
-- task: Bash@3
-  displayName: 'Set echo #4'
-  inputs:
-    targetType: 'inline'
-    script: 'echo "$(ARMCSID)"'
-
-
-- task: Bash@3
-  displayName: 'Set ENV #1'
-  inputs:
-    targetType: 'inline'
-    script: 'export ARM_SUBSCRIPTION_ID="$(SID)"'
-
-- task: Bash@3
-  displayName: 'Set ENV #2'
-  inputs:
-    targetType: 'inline'
-    script: 'export ARM_TENANT_ID="$(ATID)"'
-
-- task: Bash@3
-  displayName: 'Set ENV #3'
-  inputs:
-    targetType: 'inline'
-    script: 'export ARM_CLIENT_ID="$(ARMCID)"'
-
-- task: Bash@3
-  displayName: 'Set ENV #4'
-  inputs:
-    targetType: 'inline'
-    script: 'export ARM_CLIENT_SECRET="$(ARMCSID)"'
-
-
-- task: Bash@3
-  displayName: 'Deploy from Terraform Plan'
-  inputs:
-    targetType: 'inline'
-    script: 'terraform apply main.tfplan'
+stages:
+  - stage: TerraformContinuousIntegration
+    displayName: Terraform Module - CI
+    jobs:
+    - job: TerraformContinuousIntegrationJob
+      displayName: TerraformContinuousIntegration - CI Job
+      pool:
+        name: 'LinuxAgents'
+      steps:
+      # Step 1: run the Checkov Static Code Analysis
+      - bash: $(terraformWorkingDirectory)/checkov.sh $(terraformWorkingDirectory)
+        displayName: Checkov Static Code Analysis
+      # Step 2: install Terraform on the Azure Pipelines agent
+      - task: TerraformInstaller@2
+        displayName: 'Install Terraform'
+        inputs:
+          terraformVersion: $(terraformVersion)
+      # Step 3: run Terraform init to initialize the workspace
+      - task: TerraformCLI@2
+        displayName: 'Run terraform init'
+        inputs:
+          command: init
+          workingDirectory: $(terraformWorkingDirectory)
+      # Step 4: run Terraform validate to validate HCL syntax
+      - task: TerraformCLI@2
+        displayName: 'Run terraform validate'
+        inputs:
+          command: validate
+          workingDirectory: $(terraformWorkingDirectory)
+      # Step 5: run Terraform plan to validate HCL syntax
+      - task: TerraformCLI@2
+        displayName: 'Run terraform plan'
+        inputs:
+          command: plan
+          workingDirectory: $(terraformWorkingDirectory)
+          environmentServiceName: $(serviceConnection)
+          commandOptions: -var location=$(azureLocation)

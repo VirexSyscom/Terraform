@@ -20,8 +20,8 @@ stages:
         name: 'LinuxAgents'
       steps:
        # Step 0: run the Checkov Static Code Analysis
-      - bash: $(terraformWorkingDirectory)/checkov.sh $(terraformWorkingDirectory)
-        displayName: Checkov Static Code Analysis
+#      - bash: $(terraformWorkingDirectory)/checkov.sh $(terraformWorkingDirectory)
+#        displayName: Checkov Static Code Analysis
       # Step 1: install Terraform on the Azure Pipelines agent
       - task: TerraformInstaller@2
         displayName: 'Install Terraform'

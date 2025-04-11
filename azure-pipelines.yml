@@ -4,11 +4,11 @@ trigger:
 
 variables:
   # There must be an Azure Service Connection with that name defined in your Azure DevOps settings. See https://docs.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops
-  serviceConnection: 'azurecreate2'
+  serviceConnection: 'azurecreate'
   azureLocation: 'japaneast'
   # Terraform settings
   terraformWorkingDirectory: './tffile'
-  terraformVersion: 'lastest'
+  terraformVersion: 'latest'
 
 stages:
   - stage: TerraformContinuousIntegration

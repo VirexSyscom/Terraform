@@ -5,7 +5,6 @@ trigger:
 variables:
   # There must be an Azure Service Connection with that name defined in your Azure DevOps settings. See https://docs.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops
   serviceConnection: 'azurecreate'
-  azureLocation: 'japaneast'
   # Terraform settings
   terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)/tffile'
   terraformVersion: 'latest'
@@ -46,4 +45,3 @@ stages:
           command: plan
           workingDirectory: $(terraformWorkingDirectory)
           environmentServiceName: $(serviceConnection)
-          commandOptions: -var location=$(azureLocation)

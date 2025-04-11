@@ -7,7 +7,7 @@ variables:
   serviceConnection: 'azurecreate'
   azureLocation: 'japaneast'
   # Terraform settings
-  terraformWorkingDirectory: 'tffile/'
+  terraformWorkingDirectory: 'Terraform/tffile/'
   terraformVersion: 'latest'
 
 stages:

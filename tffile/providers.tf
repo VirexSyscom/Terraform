@@ -7,7 +7,7 @@ terraform {
     storage_account_name = "$(SAName)"
     container_name       = "$(ContainerName)"
     key                  = "terraform.tfstate"
-    use_azuread_auth     =  true
+    use_oidc             =  true
   }
   required_providers {
     azapi = {

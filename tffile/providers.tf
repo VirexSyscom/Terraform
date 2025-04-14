@@ -1,9 +1,12 @@
 terraform {
   backend "azurerm" {
-  tenant_id       = "$(ATID)"
-  client_id       = "$(ARMCID)"
-  client_secret   = "$(ARMCSID)"
-  subscription_id = "$(SID)"
+    tenant_id       = "$(ATID)"
+    client_id       = "$(ARMCID)"
+    client_secret   = "$(ARMCSID)"
+    subscription_id = "$(SID)"
+    storage_account_name = "InfraDevOpsSA"
+    container_name       = "InfraDevOpsContainer"
+    key                  = "terraform.tfstate"
   }
   required_providers {
     azapi = {

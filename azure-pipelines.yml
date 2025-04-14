@@ -32,12 +32,12 @@ stages:
       # Step 2: run Terraform init to initialize the workspace
       - task: TerraformCLI@2
         displayName: 'Run terraform init'
+        use_azuread_auth: true
         inputs:
           command: init
-          use_azuread_auth: true
           workingDirectory: $(terraformWorkingDirectory)
-          commandOptions: -backend-config=storage_account_name=$(storageaccount) -backend-config=container_name=$(container_name) -backend-config=key=$(key)
-          backendType: selfConfigured 
+#          commandOptions: -backend-config=storage_account_name=$(storageaccount) -backend-config=container_name=$(container_name) -backend-config=key=$(key)
+#          backendType: selfConfigured 
       # Step 3: run Terraform validate to validate HCL syntax
       - task: TerraformCLI@2
         displayName: 'Run terraform validate'

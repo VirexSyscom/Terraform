@@ -8,6 +8,9 @@ variables:
   # Terraform settings
   terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)/tffile'
   terraformVersion: 'latest'
+  storageaccount: 'InfaDevOpsSA'
+  container_name: 'InfaDevOpsContainer'
+  key: 'InfaState'
 
 stages:
   - stage: TerraformContinuousIntegration
@@ -32,7 +35,8 @@ stages:
         inputs:
           command: init
           workingDirectory: $(terraformWorkingDirectory)
-          containerName: 'infaContainer' 
+          commandOptions: -backend-config=storage_account_name=$(storageaccount) -backend-config=container_name=$(container_name) -backend-config=key=$(key)
+          backendType: selfConfigured 
       # Step 3: run Terraform validate to validate HCL syntax
       - task: TerraformCLI@2
         displayName: 'Run terraform validate'

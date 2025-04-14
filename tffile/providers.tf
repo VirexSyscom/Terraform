@@ -6,7 +6,7 @@ terraform {
     client_secret        = "EkH8Q~potdD-OY.nmRN6UAq9GBcmOKdXjqXadcnE"                      # Can also be set via `ARM_CLIENT_SECRET` environment variable.
     resource_group_name  = "MI"
     storage_account_name = "infradevopssa"                             # Can be passed via `-backend-config=`"storage_account_name=<storage account name>"` in the `init` command.
-    container_name       = "InfraDevOpsContainer"                      # Can be passed via `-backend-config=`"container_name=<container name>"` in the `init` command.
+    container_name       = "infradevopscontainer"                      # Can be passed via `-backend-config=`"container_name=<container name>"` in the `init` command.
     key                  = "prod.terraform.tfstate"                # Can be passed via `-backend-config=`"key=<blob key name>"` in the `init` command.
   }
 

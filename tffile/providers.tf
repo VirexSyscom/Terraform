@@ -2,7 +2,7 @@ terraform {
   backend "azurerm" {
     use_azuread_auth     = true                                    # Can also be set via `ARM_USE_AZUREAD` environment variable.
     tenant_id            = "virex.online"                          # Can also be set via `ARM_TENANT_ID` environment variable.
-    client_id            = "f98ef84a-e6d3-4046-af2e-d0d84862c15c"                      # Can also be set via `ARM_CLIENT_ID` environment variable.
+    client_id            = "a9653185-f78e-477c-acfe-cfb167f2ef20"  # Can also be set via `ARM_CLIENT_ID` environment variable.
     client_secret        = "$(ARM_CLIENT_SECRET_ID)"               # Can also be set via `ARM_CLIENT_SECRET` environment variable.
     resource_group_name  = "$(RG)"
     storage_account_name = "$(SAName)"                             # Can be passed via `-backend-config=`"storage_account_name=<storage account name>"` in the `init` command.

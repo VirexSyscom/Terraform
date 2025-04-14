@@ -1,9 +1,9 @@
 terraform {
   backend "azurerm" {
-    tenant_id            = "$(ATID)"
-    client_id            = "$(ARMCID)"
-    client_secret        = "$(ARMCSID)"
-    subscription_id      = "$(SID)"
+    tenant_id            = "$(TENANT_ID)"
+    client_id            = "$(ARM_CLIENT_ID)"
+    client_secret        = "$(ARM_CLIENT_SECRET_ID)"
+    subscription_id      = "$(SUB_ID)"
     storage_account_name = "$(SAName)"
     container_name       = "$(ContainerName)"
     key                  = "terraform.tfstate"

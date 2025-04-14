@@ -8,9 +8,9 @@ variables:
   # Terraform settings
   terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)/tffile'
   terraformVersion: 'latest'
-  storageaccount: 'InfaDevOpsSA'
-  container_name: 'InfaDevOpsContainer'
-  key: 'InfaState'
+#  storageaccount: 'InfaDevOpsSA'
+#  container_name: 'InfaDevOpsContainer'
+#  key: 'InfaState'
 
 stages:
   - stage: TerraformContinuousIntegration

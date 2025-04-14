@@ -32,7 +32,7 @@ stages:
       # Step 2: run Terraform init to initialize the workspace
       - task: TerraformCLI@2
         displayName: 'Run terraform init'
-        use_azuread_auth: true
+
         inputs:
           command: init
           workingDirectory: $(terraformWorkingDirectory)

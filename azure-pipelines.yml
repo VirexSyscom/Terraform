@@ -34,6 +34,7 @@ stages:
         displayName: 'Run terraform init'
         inputs:
           command: init
+          use_azuread_auth: true
           workingDirectory: $(terraformWorkingDirectory)
           commandOptions: -backend-config=storage_account_name=$(storageaccount) -backend-config=container_name=$(container_name) -backend-config=key=$(key)
           backendType: selfConfigured 

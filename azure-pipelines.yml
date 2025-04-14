@@ -32,6 +32,7 @@ stages:
         inputs:
           command: init
           workingDirectory: $(terraformWorkingDirectory)
+          containerName: 'infaContainer' 
       # Step 3: run Terraform validate to validate HCL syntax
       - task: TerraformCLI@2
         displayName: 'Run terraform validate'

@@ -2,13 +2,6 @@
 trigger:
 - main
 
-variables:
-  # There must be an Azure Service Connection with that name defined in your Azure DevOps settings. See https://docs.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops
-  serviceConnection: 'azurecreate'
-  # Terraform settings
-  terraformWorkingDirectory: './tffile'
-  terraformVersion: 'latest'
-
 stages:
   - stage: TerraformContinuousIntegration
     displayName: Terraform Module - CI
@@ -22,6 +15,7 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/tffile'
           backendAzureRmUseEnvironmentVariablesForAuthentication: true
           backendAzureRmUseEntraIdForAuthentication: true
           backendServiceArm: 'azurecreate'

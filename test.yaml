@@ -24,8 +24,7 @@ stages:
           backendAzureRmContainerName: $(ContainerName)
           backendAzureRmKey: 'tf/terraform.tfstate'
           ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-          #ARM_CLIENT_SECRET: $(ARM_SECRET)
-          ARM_OIDC_TOKEN: $(OIDC_TOKEN)
+          ARM_CLIENT_SECRET: $(ARM_SECRET)
 
       - task: TerraformTaskV4@4
         name: terraformPlan

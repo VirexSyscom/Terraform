@@ -22,4 +22,6 @@ stages:
           backendAzureRmResourceGroupName: 'MI'
           backendAzureRmStorageAccountName: 'infradevopssa'
           backendAzureRmContainerName: 'infradevopscontainer'
-          backendAzureRmKey: 'infrastate'
+          backendAzureRmKey: 'tf/terraform.tfstate'
+          ARM_CLIENT_ID: $(ARM_SECRET_ID)
+          ARM_CLIENT_SECRET: $(ARM_SECRET)

@@ -23,5 +23,5 @@ stages:
           backendAzureRmStorageAccountName: $(ContainerName)
           backendAzureRmContainerName: $(ContainerName)
           backendAzureRmKey: 'tf/terraform.tfstate'
-          ARM_CLIENT_ID: $(ARM_SECRET_ID)
+          ARM_CLIENT_ID: $(ARM_CLIENT_ID)
           ARM_CLIENT_SECRET: $(ARM_SECRET)

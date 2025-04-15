@@ -18,10 +18,10 @@ stages:
           workingDirectory: '$(System.DefaultWorkingDirectory)/tffile'
           backendAzureRmUseEnvironmentVariablesForAuthentication: true
           backendAzureRmUseEntraIdForAuthentication: true
-          backendServiceArm: 'azurecreate'
-          backendAzureRmResourceGroupName: 'MI'
-          backendAzureRmStorageAccountName: 'infradevopssa'
-          backendAzureRmContainerName: 'infradevopscontainer'
+          backendServiceArm: $(SVCName)
+          backendAzureRmResourceGroupName: $(RG)
+          backendAzureRmStorageAccountName: $(ContainerName)
+          backendAzureRmContainerName: $(ContainerName)
           backendAzureRmKey: 'tf/terraform.tfstate'
           ARM_CLIENT_ID: $(ARM_SECRET_ID)
           ARM_CLIENT_SECRET: $(ARM_SECRET)

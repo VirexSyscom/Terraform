@@ -24,5 +24,24 @@ stages:
           backendAzureRmContainerName: $(ContainerName)
           backendAzureRmKey: 'tf/terraform.tfstate'
           ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-          #ARM_CLIENT_SECRET: $(ARM_SECRET)
+          ARM_CLIENT_SECRET: $(ARM_SECRET)
           ARM_OIDC_TOKEN: $(OIDC_TOKEN)
+
+      - task: TerraformTaskV4@4
+        name: terraformPlan
+        displayName: Create Terraform Plan
+        inputs:
+          provider: 'azurerm'
+          command: 'plan'
+          commandOptions: '-out main.tfplan'
+          environmentServiceNameAzureRM: $(SVCName)
+
+      # Only runs if the 'terraformPlan' task has detected changes the in state. 
+      - task: TerraformTaskV4@4
+        displayName: Apply Terraform Plan
+        condition: and(succeeded(), eq(variables['terraformPlan.changesPresent'], 'true'))
+        inputs:
+          provider: 'azurerm'
+          command: 'apply'
+          commandOptions: 'main.tfplan'
+          environmentServiceNameAzureRM: $(SVCName)

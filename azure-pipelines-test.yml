@@ -42,7 +42,7 @@ variables:
   #BuildAgent: windows-latest
   WorkingDir: $(System.DefaultWorkingDirectory)/tffile
 #  Target: $(build.artifactstagingdirectory)/AMTF
-  Environment: NonProd
+#  Environment: NonProd
 #  Artifact: AM
 
 #########################

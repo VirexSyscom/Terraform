@@ -1,0 +1,159 @@
+trigger:
+  none
+
+######################
+#DECLARE PARAMETERS:-
+######################
+parameters:
+- name: SubscriptionID
+  displayName: Subscription ID Details Follow Below:-
+  default: 00000000-0000-0000-0000-000000000000
+  values:
+  -  $(SUB_ID)
+
+- name: ServiceConnection
+  displayName: Service Connection Name Follows Below:-
+  default: serviceconnection
+  values:
+  -  $(SAName)
+
+- name: RGNAME
+  displayName: Please Provide the Resource Group Name:-
+  type: object
+  default: $(RG)
+
+#- name: USRMIDNAME
+#  displayName: Please Provide the User Assigned Managed Identity Name:-
+#  type: object
+#  default: <Please provide the required Name>
+
+######################
+#DECLARE VARIABLES:-
+######################
+variables:
+  TF_VAR_RG_NAME: ${{ parameters.RGNAME }}
+#  TF_VAR_USR_MID_NAME: ${{ parameters.USRMIDNAME }}
+  ResourceGroup: tfpipeline-rg
+  StorageAccount: tfpipelinesa
+  Container: terraform
+  TfstateFile: $(System.DefaultWorkingDirectory)/tffile/InfaState 
+  #BuildAgent: windows-latest
+  WorkingDir: $(System.DefaultWorkingDirectory)/tffile
+#  Target: $(build.artifactstagingdirectory)/AMTF
+  Environment: NonProd
+#  Artifact: AM
+
+#########################
+# Declare Build Agents:-
+#########################
+pool:
+  name: 'LinuxAgents'
+
+###################
+# Declare Stages:-
+###################
+stages:
+
+- stage: PLAN
+  jobs:
+  - job: PLAN
+    displayName: PLAN
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: TerraformInstaller@2
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformCLI@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile)'
+# Terraform Validate:-
+    - task: TerraformCLI@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformCLI@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir)'
+        commandOptions: "--var-file=usrmid.tfvars --out=tfplan"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+    
+# Copy Files to Artifacts Staging Directory:-
+#    - task: CopyFiles@2
+#      displayName: COPY FILES ARTIFACTS STAGING DIRECTORY
+#      inputs:
+#        SourceFolder: '$(workingDir)'
+#        Contents: |
+#          **/*.tf
+#          **/*.tfvars
+#          **/*tfplan*
+#        TargetFolder: '$(Target)'
+# Publish Artifacts:-
+#    - task: PublishBuildArtifacts@1
+#      displayName: PUBLISH ARTIFACTS
+#      inputs:
+#        targetPath: '$(Target)'
+#        artifactName: '$(Artifact)' 
+
+- stage: DEPLOY
+  condition: succeeded()
+  dependsOn: PLAN
+  jobs:
+  - deployment: 
+    displayName: Deploy
+    environment: $(Environment)
+    pool:
+      name: 'LinuxAgents'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+# Download Artifacts:-
+          - task: DownloadBuildArtifacts@0
+            displayName: DOWNLOAD ARTIFACTS
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: '$(Artifact)'
+              downloadPath: '$(System.ArtifactsDirectory)' 
+# Install Terraform Installer in the Build Agent:-
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+            displayName: INSTALL TERRAFORM VERSION - LATEST
+            inputs:
+              terraformVersion: 'latest'
+# Terraform Init:-
+          - task: TerraformCLI@2 
+            displayName: TERRAFORM INIT
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.ArtifactsDirectory)/$(Artifact)/AMTF/' # Az DevOps can find the required Terraform code
+              backendServiceArm: '${{ parameters.ServiceConnection }}' 
+              backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+              backendAzureRmStorageAccountName: '$(StorageAccount)'
+              backendAzureRmContainerName: '$(Container)'
+              backendAzureRmKey: '$(TfstateFile)'
+# Terraform Apply:-
+          - task: TerraformCLI@2
+            displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              workingDirectory: '$(System.ArtifactsDirectory)/$(Artifact)/AMTF'
+              commandOptions: '--var-file=usrmid.tfvars'
+              environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'

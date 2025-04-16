@@ -22,9 +22,10 @@ stages:
           backendAzureRmResourceGroupName: $(RG)
           backendAzureRmStorageAccountName: $(ContainerName)
           backendAzureRmContainerName: $(ContainerName)
-          backendAzureRmKey: 'tf/terraform.tfstate'
+          backendAzureRmKey: '$(System.DefaultWorkingDirectory)/tffile/terraform.tfstate'
           ARM_CLIENT_ID: $(ARM_CLIENT_ID)
           ARM_CLIENT_SECRET: $(ARM_SECRET)
+          ARM_CLIENT_SECRET_ID: $(ARM_SECRET_ID)
 
       - task: TerraformTaskV4@4
         name: terraformPlan

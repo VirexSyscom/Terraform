@@ -26,12 +26,11 @@ steps:
     backendAzureRmTenantId: $(TID)
     backendAzureRmSubscriptionId: $(SUBID)
     ensureBackend: true
-#    secureVarsFile: 
     backendAzureRmResourceGroupName: $(SARG)
     backendAzureRmResourceGroupLocation: $(SALocation)
     backendAzureRmStorageAccountName: $(SAName)
     backendAzureRmContainerName: $(CName)
-    backendAzureRmKey: $(SAKey)
+    backendAzureRmKey: infrax.tfstate
     allowTelemetryCollection: true
 
 #- task: TerraformCLI@2

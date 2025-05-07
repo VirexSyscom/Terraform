@@ -6,19 +6,26 @@ pool:
 
 steps:
 - task: TerraformCLI@2
+  displayName: terraform init
   inputs:
     command: 'init'
     allowTelemetryCollection: true
 
 - task: TerraformCLI@2
+  displayName: terraform plan
   inputs:
     command: 'plan'
+    workingDirectory: '/tffile'
+    environmentServiceName: 'terraform_test'
+    providerAzureRmSubscriptionId: $(SUBID)
     allowTelemetryCollection: true
     publishPlanResults: 'Main.tfplan'
 
 - task: TerraformCLI@2
+  displayName: terraform apply
   inputs:
     command: 'apply'
-    environmentServiceName: $(SUB)
+    workingDirectory: '/tffile'
+    environmentServiceName: 'terraform_test'
     providerAzureRmSubscriptionId: $(SUBID)
     allowTelemetryCollection: true

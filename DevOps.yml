@@ -17,7 +17,7 @@ steps:
     command: 'plan'
     workingDirectory: '/tffile'
     environmentServiceName: 'terraform_test'
-    providerAzureRmSubscriptionId: $(SUBID)
+#    providerAzureRmSubscriptionId: $(SUBID)
     allowTelemetryCollection: true
     publishPlanResults: 'Main.tfplan'
 
@@ -26,6 +26,6 @@ steps:
   inputs:
     command: 'apply'
     workingDirectory: '/tffile'
-    environmentServiceName: 'terraform_test'
-    providerAzureRmSubscriptionId: $(SUBID)
+#    environmentServiceName: 'terraform_test'
+#    providerAzureRmSubscriptionId: $(SUBID)
     allowTelemetryCollection: true

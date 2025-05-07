@@ -25,7 +25,7 @@ steps:
     backendServiceArm: 'terraform_test'
     backendAzureRmTenantId: $(TID)
     backendAzureRmSubscriptionId: $(SUBID)
-    ensureBackend: true
+    #ensureBackend: true
     backendAzureRmResourceGroupName: $(SARG)
     backendAzureRmResourceGroupLocation: $(SALocation)
     backendAzureRmStorageAccountName: $(SAName)

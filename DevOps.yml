@@ -6,6 +6,7 @@ pool:
 
 steps:
 
+
 #- task: TerraformCLI@2
 #  inputs:
 #    command: 'init'
@@ -27,6 +28,7 @@ steps:
     backendAzureRmResourceGroupName: $(SARG)
     backendAzureRmResourceGroupLocation: $(SALocation)
     backendAzureRmStorageAccountName: $(SAName)
+    backendAzureRmContainerName: $(CName)
     allowTelemetryCollection: true
 
 #- task: TerraformCLI@2

@@ -6,13 +6,27 @@ pool:
 
 steps:
 
+#- task: TerraformCLI@2
+#  inputs:
+#    command: 'init'
+#    workingDirectory: 'tffile'
+#    backendType: 'azurerm'
+#    ensureBackend: true
+#    backendServiceArm: 'terraform_test'
+#    allowTelemetryCollection: true
+
 - task: TerraformCLI@2
   inputs:
     command: 'init'
     workingDirectory: 'tffile'
     backendType: 'azurerm'
-    ensureBackend: true
     backendServiceArm: 'terraform_test'
+    backendAzureRmTenantId: $(TID)
+    backendAzureRmSubscriptionId: $(SUBID)
+    ensureBackend: true
+    backendAzureRmResourceGroupName: $(SARG)
+    backendAzureRmResourceGroupLocation: $(SALocation)
+    backendAzureRmStorageAccountName: $(SAName)
     allowTelemetryCollection: true
 
 #- task: TerraformCLI@2

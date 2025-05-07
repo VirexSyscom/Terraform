@@ -5,19 +5,25 @@ pool:
   name: 'LinuxAgents'
 
 steps:
+
 - task: TerraformCLI@2
-  displayName: terraform init
   inputs:
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    backendType: 'azurerm'
+    backendServiceArm: 'terraform_test'
     allowTelemetryCollection: true
+
+#- task: TerraformCLI@2
+#  displayName: terraform init
+#  inputs:
+#    command: 'init'
+#    allowTelemetryCollection: true
 
 
 - task: TerraformCLI@2
   displayName: terraform plan
   inputs:
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     environmentServiceName: 'terraform_test'
 #    providerAzureRmSubscriptionId: $(SUBID)
     allowTelemetryCollection: true
@@ -27,7 +33,6 @@ steps:
   displayName: terraform apply
   inputs:
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     environmentServiceName: 'terraform_test'
 #    providerAzureRmSubscriptionId: $(SUBID)
     allowTelemetryCollection: true

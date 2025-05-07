@@ -9,12 +9,15 @@ steps:
   displayName: terraform init
   inputs:
     command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/tffile'
     allowTelemetryCollection: true
+
 
 - task: TerraformCLI@2
   displayName: terraform plan
   inputs:
     command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/tffile'
     environmentServiceName: 'terraform_test'
 #    providerAzureRmSubscriptionId: $(SUBID)
     allowTelemetryCollection: true
@@ -24,6 +27,7 @@ steps:
   displayName: terraform apply
   inputs:
     command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/tffile'
     environmentServiceName: 'terraform_test'
 #    providerAzureRmSubscriptionId: $(SUBID)
     allowTelemetryCollection: true

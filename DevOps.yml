@@ -30,7 +30,7 @@ steps:
     backendAzureRmResourceGroupLocation: $(SALocation)
     backendAzureRmStorageAccountName: $(SAName)
     backendAzureRmContainerName: $(CName)
-    backendAzureRmKey: $(Secret)
+    backendAzureRmKey: infrax.tfstate
     allowTelemetryCollection: true
 
 #- task: TerraformCLI@2

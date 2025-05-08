@@ -11,7 +11,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: 'tffile'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
     backendServiceArm: 'terraform_test'
     backendAzureRmOverrideSubscriptionID: $(SUBID)
     backendAzureRmResourceGroupName: $(SARG)
@@ -24,7 +24,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: 'tffile'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
     environmentServiceNameAzureRM: 'terraform_test'
     environmentAzureRmOverrideSubscriptionID: $(SUBID)
 
@@ -33,7 +33,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: 'tffile'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
     environmentServiceNameAzureRM: 'terraform_test'
     environmentAzureRmOverrideSubscriptionID: $(SUBID)
 

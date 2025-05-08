@@ -37,7 +37,8 @@ steps:
     backendAzureRmResourceGroupLocation: '$(SALocation)'
     backendAzureRmStorageAccountName: '$(SAName)'
     backendAzureRmContainerName: '$(CName)'
-    backendAzureRmKey: infrax.tfstate
+    backendAzureRmKey: $(SAKey)
+    #backendAzureRmKey: infrax.tfstate
     allowTelemetryCollection: true
 
 

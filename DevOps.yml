@@ -6,6 +6,36 @@ pool:
 
 steps:
 
+- task: TerraformTask@5
+  displayName: terraform init
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: 'tffile'
+    backendServiceArm: 'terraform_test'
+    backendAzureRmOverrideSubscriptionID: $(SUBID)
+    backendAzureRmResourceGroupName: $(SARG)
+    backendAzureRmStorageAccountName: $(SAName)
+    backendAzureRmContainerName: $(CName)
+    backendAzureRmKey: $(SAKey)
+
+- task: TerraformTask@5
+  displayName: terraform plan
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: 'tffile'
+    environmentServiceNameAzureRM: 'terraform_test'
+    environmentAzureRmOverrideSubscriptionID: $(SUBID)
+
+- task: TerraformTask@5
+  displayName: terraform apply
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: 'tffile'
+    environmentServiceNameAzureRM: 'terraform_test'
+    environmentAzureRmOverrideSubscriptionID: $(SUBID)
 
 #- task: TerraformCLI@2
 #  inputs:
@@ -24,39 +54,42 @@ steps:
 #    allowTelemetryCollection: true
 #    commandOptions: '-var secret=$(Secret)'
 
-- task: TerraformCLI@2
-  inputs:
-    command: 'init'
-    commandOptions: '-var secret=$(Secret)'
-    workingDirectory: 'tffile'
-    backendType: 'azurerm'
-    backendServiceArm: 'terraform_test'
-    backendAzureRmTenantId: '$(TID)'
-    backendAzureRmSubscriptionId: '$(SUBID)'
-    backendAzureRmResourceGroupName: '$(SARG)'
-    backendAzureRmResourceGroupLocation: '$(SALocation)'
-    backendAzureRmStorageAccountName: '$(SAName)'
-    backendAzureRmContainerName: '$(CName)'
-    backendAzureRmKey: $(SAKey)
-    #backendAzureRmKey: infrax.tfstate
-    allowTelemetryCollection: true
+#- task: TerraformCLI@2
+#  inputs:
+#    command: 'init'
+#    commandOptions: '-var secret=$(Secret)'
+#    workingDirectory: 'tffile'
+#    backendType: 'azurerm'
+#    backendServiceArm: 'terraform_test'
+#    backendAzureRmTenantId: '$(TID)'
+#    backendAzureRmSubscriptionId: '$(SUBID)'
+#    backendAzureRmResourceGroupName: '$(SARG)'
+#    backendAzureRmResourceGroupLocation: '$(SALocation)'
+#    backendAzureRmStorageAccountName: '$(SAName)'
+#    backendAzureRmContainerName: '$(CName)'
+#    backendAzureRmKey: $(SAKey)
+#    #backendAzureRmKey: infrax.tfstate
+#    allowTelemetryCollection: true
 
 
-- task: TerraformCLI@2
-  displayName: terraform plan
-  inputs:
-    command: 'plan'
-    workingDirectory: 'tffile'
-    environmentServiceName: 'terraform_test'
-#    providerAzureRmSubscriptionId: $(SUBID)
-    allowTelemetryCollection: true
-    publishPlanResults: 'Main.tfplan'
+#- task: TerraformCLI@2
+#  displayName: terraform plan
+#  inputs:
+#    command: 'plan'
+#    workingDirectory: 'tffile'
+#    environmentServiceName: 'terraform_test'
+##    providerAzureRmSubscriptionId: $(SUBID)
+#    allowTelemetryCollection: true
+#    publishPlanResults: 'Main.tfplan'
 
-- task: TerraformCLI@2
-  displayName: terraform apply
-  inputs:
-    command: 'apply'
-    workingDirectory: 'tffile'
-    environmentServiceName: 'terraform_test'
-#    providerAzureRmSubscriptionId: $(SUBID)
-    allowTelemetryCollection: true
+#- task: TerraformCLI@2
+#  displayName: terraform apply
+#  inputs:
+#    command: 'apply'
+#    workingDirectory: 'tffile'
+#    environmentServiceName: 'terraform_test'
+##    providerAzureRmSubscriptionId: $(SUBID)
+#    allowTelemetryCollection: true
+
+
+

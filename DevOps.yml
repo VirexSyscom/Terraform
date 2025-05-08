@@ -32,6 +32,7 @@ steps:
     backendAzureRmContainerName: $(CName)
     backendAzureRmKey: $(Secret)
     allowTelemetryCollection: true
+    commandOptions: '-var secret=$(Secret)'
 
 #- task: TerraformCLI@2
 #  displayName: terraform init

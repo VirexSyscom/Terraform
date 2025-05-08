@@ -22,6 +22,20 @@ steps:
 #    backendServiceArm: 'terraform_test'
 #    allowTelemetryCollection: true
 
+- task: Bash@3
+  displayName: TEST1
+  inputs:
+    targetType: 'inline'
+    script: 'echo "##vso[task.setvariable variable=DEVSECRET;issecret=true]secretvalue"'
+
+
+- task: Bash@3
+  displayName: TEST2
+  inputs:
+    targetType: 'inline'
+    script: 'echo $(DEVSECRET)'
+
+
 - task: TerraformCLI@2
   inputs:
     command: 'init'

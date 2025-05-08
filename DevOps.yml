@@ -4,6 +4,11 @@ trigger:
 pool:
   name: 'LinuxAgents'
 
+variables:
+- group: Secert
+- name: DevOpsServiceAccount
+  value: 'DEVSECRET'
+
 steps:
 
 
@@ -30,9 +35,9 @@ steps:
     backendAzureRmResourceGroupLocation: $(SALocation)
     backendAzureRmStorageAccountName: $(SAName)
     backendAzureRmContainerName: $(CName)
-    backendAzureRmKey: $(Secret)
+    backendAzureRmKey: $(DEVSECRET)
     allowTelemetryCollection: true
-    commandOptions: '-var secret=$(Secret)'
+    commandOptions: '-var secret=$(DEVSECRET)'
 
 #- task: TerraformCLI@2
 #  displayName: terraform init

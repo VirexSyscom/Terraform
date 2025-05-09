@@ -5,22 +5,18 @@ pool:
   name: 'LinuxAgents'
 
 steps:
-
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'pwd'
     
 - task: CmdLine@2
-  inputs:
-    script: |
-      pwd
-      cd $(System.DefaultWorkingDirectory)
-
-- task: Bash@3
   displayName: Download terraform file
   inputs:
-    filePath: 'https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/tffiledownload.sh'
+    script: |
+      cd $(System.DefaultWorkingDirectory)
+      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/main.tf
+      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/output.tf
+      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/providers.tf
+      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/ssh.tf
+      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/variables.tf
+
 
 - task: TerraformTask@5
   displayName: terraform init

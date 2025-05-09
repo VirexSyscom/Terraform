@@ -10,43 +10,41 @@ steps:
   displayName: Download terraform file
   inputs:
     script: |
-      cd $(System.DefaultWorkingDirectory)
-      ls
-      mkdir test
-      cd test
-      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/main.tf
-      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/output.tf
-      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/providers.tf
-      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/variables.tf
+       echo "Test"
+#      cd $(System.DefaultWorkingDirectory)
+#      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/main.tf
+#      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/output.tf
+#      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/providers.tf
+#      wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/variables.tf
 
 
-#- task: TerraformTask@5
-#  displayName: terraform init
-#  inputs:
-#    provider: 'azurerm'
-#    command: 'init'
-#    workingDirectory: '$(System.DefaultWorkingDirectory)'
-#    backendServiceArm: 'terraform_test'
-#    backendAzureRmOverrideSubscriptionID: $(SUBID)
-#    backendAzureRmResourceGroupName: $(SARG)
-#    backendAzureRmStorageAccountName: $(SAName)
-#    backendAzureRmContainerName: $(CName)
-#    backendAzureRmKey: $(SAKey)
+- task: TerraformTask@5
+  displayName: terraform init
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    backendServiceArm: 'terraform_test'
+    backendAzureRmOverrideSubscriptionID: $(SUBID)
+    backendAzureRmResourceGroupName: $(SARG)
+    backendAzureRmStorageAccountName: $(SAName)
+    backendAzureRmContainerName: $(CName)
+    backendAzureRmKey: $(SAKey)
 
-#- task: TerraformTask@5
-#  displayName: terraform plan
-#  inputs:
-#    provider: 'azurerm'
-#    command: 'plan'
-#    workingDirectory: '$(System.DefaultWorkingDirectory)'
-#    environmentServiceNameAzureRM: 'terraform_test'
-#    environmentAzureRmOverrideSubscriptionID: $(SUBID)
+- task: TerraformTask@5
+  displayName: terraform plan
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    environmentServiceNameAzureRM: 'terraform_test'
+    environmentAzureRmOverrideSubscriptionID: $(SUBID)
 
-#- task: TerraformTask@5
-#  displayName: terraform apply
-#  inputs:
-#    provider: 'azurerm'
-#    command: 'apply'
-#    workingDirectory: '$(System.DefaultWorkingDirectory)'
-#    environmentServiceNameAzureRM: 'terraform_test'
-#    environmentAzureRmOverrideSubscriptionID: $(SUBID)
+- task: TerraformTask@5
+  displayName: terraform apply
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    environmentServiceNameAzureRM: 'terraform_test'
+    environmentAzureRmOverrideSubscriptionID: $(SUBID)

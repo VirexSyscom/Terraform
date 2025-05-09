@@ -11,6 +11,8 @@ steps:
   inputs:
     script: |
       cd $(System.DefaultWorkingDirectory)
+      mkdir test
+      cd test
       wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/main.tf
       wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/output.tf
       wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/providers.tf
@@ -22,7 +24,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/test'
     backendServiceArm: 'terraform_test'
     backendAzureRmOverrideSubscriptionID: $(SUBID)
     backendAzureRmResourceGroupName: $(SARG)
@@ -35,7 +37,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/test'
     environmentServiceNameAzureRM: 'terraform_test'
     environmentAzureRmOverrideSubscriptionID: $(SUBID)
 
@@ -44,7 +46,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/test'
     environmentServiceNameAzureRM: 'terraform_test'
     environmentAzureRmOverrideSubscriptionID: $(SUBID)
 

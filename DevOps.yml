@@ -6,6 +6,11 @@ pool:
 
 steps:
 
+- task: Bash@3
+  displayName: Download terraform file
+  inputs:
+    filePath: 'https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/tffiledownload.sh'
+
 - task: TerraformTask@5
   displayName: terraform init
   inputs:

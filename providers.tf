@@ -18,10 +18,3 @@ terraform {
 provider "azurerm" {
   features {}
 }
-
-provider "azapi" {
-  subscription_id = $(SUBID)
-  tenant_id       = $(TID)
-  client_id       = $(CID)
-  client_secret   = $(CSercet)
-}

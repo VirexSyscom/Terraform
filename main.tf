@@ -113,7 +113,7 @@ resource "azurerm_linux_virtual_machine" "test" {
 
   computer_name  = "hostname"
   admin_username = var.username
-  admin_password = Syscom2025Dev
+  admin_password = "Syscom2025Dev"
 }
 
 resource "azurerm_managed_disk" "test" {

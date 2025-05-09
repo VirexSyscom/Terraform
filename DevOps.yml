@@ -10,6 +10,12 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'pwd'
+    
+- task: CmdLine@2
+  inputs:
+    script: |
+      pwd
+      cd $(System.DefaultWorkingDirectory)
 
 - task: Bash@3
   displayName: Download terraform file

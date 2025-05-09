@@ -100,10 +100,6 @@ resource "azurerm_linux_virtual_machine" "test" {
     version   = "latest"
   }
 
-  admin_password {
-    username = var.username
-    password = Syscom2025Dev
-  }
   #admin_ssh_key {
   #  username   = var.username
   #  public_key = azapi_resource_action.ssh_public_key_gen.output.publicKey
@@ -117,6 +113,7 @@ resource "azurerm_linux_virtual_machine" "test" {
 
   computer_name  = "hostname"
   admin_username = var.username
+  admin_password = Syscom2025Dev
 }
 
 resource "azurerm_managed_disk" "test" {

@@ -1,4 +1,5 @@
 #!/bin/bash
+delay 3000
 cd $(System.DefaultWorkingDirectory)
 wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/main.tf
 wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/output.tf

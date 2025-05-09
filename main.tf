@@ -100,10 +100,14 @@ resource "azurerm_linux_virtual_machine" "test" {
     version   = "latest"
   }
 
-  admin_ssh_key {
-    username   = var.username
-    public_key = azapi_resource_action.ssh_public_key_gen.output.publicKey
+  admin_password {
+    username = var.username
+    password = Syscom2025Dev
   }
+  #admin_ssh_key {
+  #  username   = var.username
+  #  public_key = azapi_resource_action.ssh_public_key_gen.output.publicKey
+  #}
 
   os_disk {
     caching              = "ReadWrite"

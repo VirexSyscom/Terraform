@@ -11,6 +11,7 @@ steps:
   inputs:
     script: |
       cd $(System.DefaultWorkingDirectory)
+      ls
       mkdir test
       cd test
       wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/main.tf
@@ -19,90 +20,33 @@ steps:
       wget https://raw.githubusercontent.com/VirexSyscom/Terraform/refs/heads/main/variables.tf
 
 
-- task: TerraformTask@5
-  displayName: terraform init
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/test'
-    backendServiceArm: 'terraform_test'
-    backendAzureRmOverrideSubscriptionID: $(SUBID)
-    backendAzureRmResourceGroupName: $(SARG)
-    backendAzureRmStorageAccountName: $(SAName)
-    backendAzureRmContainerName: $(CName)
-    backendAzureRmKey: $(SAKey)
-
-- task: TerraformTask@5
-  displayName: terraform plan
-  inputs:
-    provider: 'azurerm'
-    command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/test'
-    environmentServiceNameAzureRM: 'terraform_test'
-    environmentAzureRmOverrideSubscriptionID: $(SUBID)
-
-- task: TerraformTask@5
-  displayName: terraform apply
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/test'
-    environmentServiceNameAzureRM: 'terraform_test'
-    environmentAzureRmOverrideSubscriptionID: $(SUBID)
-
-#- task: TerraformCLI@2
+#- task: TerraformTask@5
+#  displayName: terraform init
 #  inputs:
+#    provider: 'azurerm'
 #    command: 'init'
-#    workingDirectory: 'tffile'
-#    backendType: 'azurerm'
+#    workingDirectory: '$(System.DefaultWorkingDirectory)'
 #    backendServiceArm: 'terraform_test'
-#    backendAzureRmTenantId: $(TID)
-#    backendAzureRmSubscriptionId: $(SUBID)
-#    #ensureBackend: true
+#    backendAzureRmOverrideSubscriptionID: $(SUBID)
 #    backendAzureRmResourceGroupName: $(SARG)
-#    backendAzureRmResourceGroupLocation: $(SALocation)
 #    backendAzureRmStorageAccountName: $(SAName)
 #    backendAzureRmContainerName: $(CName)
-#    backendAzureRmKey: $(Secret)
-#    allowTelemetryCollection: true
-#    commandOptions: '-var secret=$(Secret)'
-
-#- task: TerraformCLI@2
-#  inputs:
-#    command: 'init'
-#    commandOptions: '-var secret=$(Secret)'
-#    workingDirectory: 'tffile'
-#    backendType: 'azurerm'
-#    backendServiceArm: 'terraform_test'
-#    backendAzureRmTenantId: '$(TID)'
-#    backendAzureRmSubscriptionId: '$(SUBID)'
-#    backendAzureRmResourceGroupName: '$(SARG)'
-#    backendAzureRmResourceGroupLocation: '$(SALocation)'
-#    backendAzureRmStorageAccountName: '$(SAName)'
-#    backendAzureRmContainerName: '$(CName)'
 #    backendAzureRmKey: $(SAKey)
-#    #backendAzureRmKey: infrax.tfstate
-#    allowTelemetryCollection: true
 
-
-#- task: TerraformCLI@2
+#- task: TerraformTask@5
 #  displayName: terraform plan
 #  inputs:
+#    provider: 'azurerm'
 #    command: 'plan'
-#    workingDirectory: 'tffile'
-#    environmentServiceName: 'terraform_test'
-##    providerAzureRmSubscriptionId: $(SUBID)
-#    allowTelemetryCollection: true
-#    publishPlanResults: 'Main.tfplan'
+#    workingDirectory: '$(System.DefaultWorkingDirectory)'
+#    environmentServiceNameAzureRM: 'terraform_test'
+#    environmentAzureRmOverrideSubscriptionID: $(SUBID)
 
-#- task: TerraformCLI@2
+#- task: TerraformTask@5
 #  displayName: terraform apply
 #  inputs:
+#    provider: 'azurerm'
 #    command: 'apply'
-#    workingDirectory: 'tffile'
-#    environmentServiceName: 'terraform_test'
-##    providerAzureRmSubscriptionId: $(SUBID)
-#    allowTelemetryCollection: true
-
-
-
+#    workingDirectory: '$(System.DefaultWorkingDirectory)'
+#    environmentServiceNameAzureRM: 'terraform_test'
+#    environmentAzureRmOverrideSubscriptionID: $(SUBID)
